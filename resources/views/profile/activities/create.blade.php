@@ -38,7 +38,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary text-white">{{ __('Submit') }}</button>
-                            <a href="{{ route('activities') }}" class="btn btn-danger">{{ __('Cancel') }}</a>
+                            <a href="{{ route('profile') }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                         </form>  
                     </div>              
                 </div>

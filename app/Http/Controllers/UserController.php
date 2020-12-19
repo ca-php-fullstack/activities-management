@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\UserActivity;
 
 class UserController extends Controller
 {
@@ -21,8 +22,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(UserActivity $userActivity)
     {
-        return view('profile.home');
+        $userActivity = UserActivity::all();
+        return view('profile.index', compact('userActivity'));
     }
 }

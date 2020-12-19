@@ -17,16 +17,6 @@ class UserActivityController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(UserActivity $userActivity)
-    {
-        $userActivity = UserActivity::all();
-        return view('profile.activities.index', compact('userActivity'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -60,21 +50,8 @@ class UserActivityController extends Controller
             'activity_duration' => $request->activity_duration,
         ]);
 
-        return redirect(route('home'))->with('message', 'Activity Created Successfully');
+        return redirect(route('profile'))->with('message', 'Activity Created Successfully');
         
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\UserActivity  $userActivity
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserActivity $userActivity)
-    {
-        $userActivity = UserActivity::find(1);
-
-        return view('profile.activities.show', compact('userActivity'));
     }
 
     /**
@@ -85,7 +62,7 @@ class UserActivityController extends Controller
      */
     public function edit(UserActivity $userActivity)
     {
-        $userActivity = UserActivity::find(1);
+        
         return view('profile.activities.edit', compact('userActivity'));
     }
 
@@ -112,7 +89,7 @@ class UserActivityController extends Controller
             'activity_duration' =>$request->activity_duration,
         ]);
 
-        return redirect(route('home'))->with('message', 'Activity Updated Successfully');
+        return redirect(route('profile'))->with('message', 'Activity Updated Successfully');
     }
 
     /**
@@ -125,6 +102,6 @@ class UserActivityController extends Controller
     {
         $userActivity->delete();
         
-        return redirect(route('home'))->with('message', 'Activity Deleted Successfully');
+        return redirect(route('profile'))->with('message', 'Activity Deleted Successfully');
     }
 }

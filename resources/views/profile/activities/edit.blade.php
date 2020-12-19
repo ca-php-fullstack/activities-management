@@ -14,7 +14,7 @@
 
                             <div class="form-group">
                                 <label for="activity_name">{{ __('Activity Name') }}</label>
-                                <input type="text" class="form-control" id="activity_name" name="activity_name">
+                                <input type="text" class="form-control" id="activity_name" name="activity_name" value="{{ $userActivity->activity_name }}">
 
                                 @error('activity_name')
                                     <span class="invalid-feedback" role="alert">
@@ -25,7 +25,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="activity_duration">{{ __('Activity Duration') }}</label>
-                                <input type="number" class="form-control" id="activity_duration" name="activity_duration">
+                                <input type="number" class="form-control" id="activity_duration" name="activity_duration" value="{{ $userActivity->activity_duration }}">
 
                                 @error('activity_duration')
                                     <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="activity_description">{{ __('Activity Description') }}</label>
-                                <textarea class="form-control" id="activity_description" name="activity_description" rows="3"></textarea>
+                                <textarea class="form-control" id="activity_description" name="activity_description" rows="3">{{ $userActivity->activity_description }}</textarea>
 
                                 @error('activity_description')
                                     <span class="invalid-feedback" role="alert">
@@ -52,7 +52,7 @@
                                         .submit()
                                     }">{{ __('Submit') }}
                             </button>
-                            <a href="{{ route('activities') }}" class="btn btn-danger">{{ __('Cancel') }}</a>
+                            <a href="{{ route('profile') }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                         </form>  
                     </div>              
                 </div>

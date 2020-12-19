@@ -13,19 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes([
     'register' => false
 ]);
 
-Route::get('/home', 'UserController@index')->name('home');
-Route::get('/activities', 'UserActivityController@index')->name('activities');
+Route::get('/profile', 'UserController@index')->name('profile');
+
 Route::get('/create', 'UserActivityController@create')->name('create');
 Route::post('/store', 'UserActivityController@store')->name('store');
-Route::get('/show/{id}', 'UserActivityController@show')->name('show');
 Route::get('/edit/{userActivity}', 'UserActivityController@edit')->name('edit');
-Route::put('/update/{id}', 'UserActivityController@update')->name('update');
-Route::delete('/destroy/{id}', 'UserActivityController@destroy')->name('destroy');
+Route::put('/update/{userActivity}', 'UserActivityController@update')->name('update');
+Route::delete('/destroy/{userActivity}', 'UserActivityController@destroy')->name('destroy');
