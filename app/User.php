@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 
+     * 
+     * One to Many (Activities)
+     */
+    public function userActivities(){
+
+        return $this->hasMany(UserActivity::class);
+    }
 }

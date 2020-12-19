@@ -18,9 +18,11 @@ class CreateUserActivitiesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('activity_name');
-            $table->text('activity_description');
+            $table->dateTime('activity_start_date');
+            $table->dateTime('activity_end_date');
             $table->time('activity_duration');
-            $table->timestamps();            
+            $table->text('activity_description');  
+            $table->timestamps();                     
         });
     }
 

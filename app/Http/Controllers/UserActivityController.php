@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\UserActivity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class UserActivityController extends Controller
 {
@@ -38,16 +39,23 @@ class UserActivityController extends Controller
     {
         $request->validate([
             'activity_name' => 'required',
-            'activity_description' => 'required',
-            'activity_duration'=> 'required',
-            
+            'activity_start_date' => 'required',
+            'activity_end_date'=> 'required',
+            'activity_description' => 'required',            
         ]);
 
+        $startTime = Carbon::parse($request->activity_start_date);
+        $endTime = Carbon::parse($request->activity_end_date);
+        $totalDuration =  $startTime->diff($endTime)->format('%H:%I:%S');
+    
+    
         UserActivity::create([
             'user_id' => $request->user()->id,
             'activity_name' => $request->activity_name,
+            'activity_start_date' =>$request->activity_start_date,
+            'activity_end_date' =>$request->activity_end_date,
             'activity_description' => $request->activity_description,
-            'activity_duration' => $request->activity_duration,
+            'activity_duration' => $totalDuration
         ]);
 
         return redirect(route('profile'))->with('message', 'Activity Created Successfully');
@@ -73,20 +81,28 @@ class UserActivityController extends Controller
      * @param  \App\UserActivity  $userActivity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, UserActivity $userActivity)
     {
         $request->validate([
             
             'activity_name' => 'required',
+            'activity_start_date' => 'required',
+            'activity_end_date' => 'required',
             'activity_description' => 'required',
-            'activity_duration'=> 'required',
+            
             
         ]);
 
+        $startTime = Carbon::parse($request->activity_start_date);
+        $endTime = Carbon::parse($request->activity_end_date);
+        $totalDuration =  $startTime->diff($endTime)->format('%H:%I:%S');
+
         $userActivity->update([
             'activity_name' =>$request->activity_name,
+            'activity_start_date' =>$request->activity_start_date,
+            'activity_end_date' =>$request->activity_end_date,
             'activity_description' =>$request->activity_description,
-            'activity_duration' =>$request->activity_duration,
+            'activity_duration' => $totalDuration
         ]);
 
         return redirect(route('profile'))->with('message', 'Activity Updated Successfully');

@@ -24,7 +24,8 @@ class UserController extends Controller
      */
     public function index(UserActivity $userActivity)
     {
-        $userActivity = UserActivity::all();
+        $userActivity = auth()->user()->userActivities->sortBy('activity_start_date');
+     
         return view('profile.index', compact('userActivity'));
     }
 }
