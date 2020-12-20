@@ -28,9 +28,9 @@ class User extends Authenticatable
     ];
 
     /**
+     * The activities to be shown for a loged user
      * 
      * 
-     * One to Many (Activities)
      */
     public function userActivities(){
 

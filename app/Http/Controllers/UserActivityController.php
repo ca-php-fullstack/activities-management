@@ -61,6 +61,10 @@ class UserActivityController extends Controller
         return redirect(route('profile'))->with('message', 'Activity Created Successfully');
         
     }
+    public function show()
+    {
+        return view('profile.activities.reportshow');
+    }
 
     /**
      * Show the form for editing the specified resource.

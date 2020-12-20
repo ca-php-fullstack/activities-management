@@ -23,6 +23,7 @@ Route::get('/profile', 'UserController@index')->name('profile');
 
 Route::get('/create', 'UserActivityController@create')->name('create');
 Route::post('/store', 'UserActivityController@store')->name('store');
+Route::get('/show', 'UserActivityController@show')->name('show');
 Route::get('/edit/{userActivity}', 'UserActivityController@edit')->name('edit');
 Route::put('/update/{userActivity}', 'UserActivityController@update')->name('update');
 Route::delete('/destroy/{userActivity}', 'UserActivityController@destroy')->name('destroy');
