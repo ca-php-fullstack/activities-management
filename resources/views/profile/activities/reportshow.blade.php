@@ -20,7 +20,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <label for="date-from">{{ __('Date From') }}</label>
-                                        <input type="datetime-local" step="1" class="form-control" name="" id="" placeholder="mm/dd/yyyy, h:m:s AM/PM">
+                                        <input type="date" step="1" class="form-control" name="" id="">
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <label for="date-to">{{ __('Date To') }}</label>
-                                        <input type="datetime-local" step="1" class="form-control" name="" id="" placeholder="mm/dd/yyyy, h:m:s AM/PM">
+                                        <input type="date" step="1" class="form-control" name="" id="">
                                     </div>
                                 </div>
                             </div>
