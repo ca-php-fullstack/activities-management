@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\UserActivity;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -17,6 +18,13 @@ class UserActivityController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index(UserActivity $userActivity)
+    {
+        $userActivity = auth()->user()->userActivities->sortBy('activity_start_date');
+     
+        return view('profile.activities.index', compact('userActivity'));
     }
 
     /**
@@ -35,7 +43,7 @@ class UserActivityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, UserActivity $userActivity)
+    public function store(Request $request)
     {
         $request->validate([
             'activity_name' => 'required',
@@ -48,9 +56,7 @@ class UserActivityController extends Controller
         $endTime = Carbon::parse($request->activity_end_date);
         $totalDuration =  $startTime->diff($endTime)->format('%H:%I:%S');
     
-    
-        UserActivity::create([
-            'user_id' => $request->user()->id,
+        auth()->user()->userActivities()->create([
             'activity_name' => $request->activity_name,
             'activity_start_date' =>$request->activity_start_date,
             'activity_end_date' =>$request->activity_end_date,
@@ -58,15 +64,10 @@ class UserActivityController extends Controller
             'activity_duration' => $totalDuration
         ]);
 
-        return redirect(route('profile'))->with('message', 'Activity Created Successfully');
+        return redirect(route('activities'))->with('message', 'Activity Created Successfully');
         
     }
-    public function show()
-    {
-        $userActivity = UserActivity::all()->sortBy('activity_start_date');
-        return view('profile.activities.reportshow', compact('userActivity'));
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -110,7 +111,7 @@ class UserActivityController extends Controller
             'activity_duration' => $totalDuration
         ]);
 
-        return redirect(route('profile'))->with('message', 'Activity Updated Successfully');
+        return redirect(route('activities'))->with('message', 'Activity Updated Successfully');
     }
 
     /**

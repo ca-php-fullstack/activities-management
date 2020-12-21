@@ -22,10 +22,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(UserActivity $userActivity)
-    {
-        $userActivity = auth()->user()->userActivities->sortBy('activity_start_date');
-     
-        return view('profile.index', compact('userActivity'));
+    public function index()
+    {     
+        return view('profile.index');
     }
 }

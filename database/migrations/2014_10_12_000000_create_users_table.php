@@ -25,6 +25,14 @@ class CreateUsersTable extends Migration
             'username' => 'john_smith',
             'password' => Hash::make('secret123')
         ]);
+        DB::table('users')->insert([
+            'username' => 'rade_j',
+            'password' => Hash::make('secret12345')
+        ]);
+        DB::table('users')->insert([
+            'username' => 'radoslav',
+            'password' => Hash::make('0107985Marko@')
+        ]);
     }
 
     /**
