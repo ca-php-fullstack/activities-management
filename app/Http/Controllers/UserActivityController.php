@@ -63,7 +63,8 @@ class UserActivityController extends Controller
     }
     public function show()
     {
-        return view('profile.activities.reportshow');
+        $userActivity = UserActivity::all()->sortBy('activity_start_date');
+        return view('profile.activities.reportshow', compact('userActivity'));
     }
 
     /**
