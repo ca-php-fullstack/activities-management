@@ -6,6 +6,7 @@
 <div class="card">
     <h4 class="card-header">Dashboard</h4>
     <div class="card-body">
+      <x-alert />
       <h5 class="card-title">{{ auth()->user()->username }}</h5>
       <a href="{{ route('activities') }}" class="btn btn-dark">My Activities</a>
     </div>

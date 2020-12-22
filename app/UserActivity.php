@@ -14,4 +14,9 @@ class UserActivity extends Model
         'activity_description',
         'activity_duration'        
     ];
+
+    public function ActivitiesReports(){
+
+        return $this->hasMany(UserActivityReport::class);
+    }
 }

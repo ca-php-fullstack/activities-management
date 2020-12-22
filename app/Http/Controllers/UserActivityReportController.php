@@ -14,9 +14,11 @@ class UserActivityReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserActivity $userActivity)
     {
-        return view('profile.reports.index');
+        $userActivity = auth()->user()->userActivities->sortBy('activity_start_date');
+
+        return view('profile.reports.index', compact('userActivity'));
     }
 
     /**
@@ -24,8 +26,23 @@ class UserActivityReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reportShow()
+    public function reportCreate(Request $request)
     {
+        $dateFrom = $request->input('date_from');
+        $dateTo = $request->input('date_to');        
+            
+        if (isset($dateFrom) && isset($dateTo)) {
+
+            $userActivity = auth()->user()->userActivities
+            ->sortBy('activity_start_date')
+            ->where('activity_start_date', '>=', $dateFrom)
+            ->where('activity_end_date', '<=', $dateTo);
+
+            return view('profile.reports.create', compact('userActivity'));
+
+        }else {
+            return redirect()->back()->with('error', 'No Date Selected');
+        }
         
     }
 
@@ -37,7 +54,25 @@ class UserActivityReportController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $request->validate([
+            'activity_name_report',
+            'activity_start_date_report',
+            'activity_end_date_report',
+            'activity_duration_report', 
+            'activity_description_report'
+                       
+        ]);
+
+        auth()->user()->userActivitiesReports()->create([
+            'activity_name_report' => $request->activity_name_report,
+            'activity_start_date_report' => $request->activity_start_date_report,
+            'activity_end_date_report' => $request->activity_end_date_report,
+            'activity_duration_report' => $request->activity_duration_report,
+            'activity_description_report' => $request->activity_description_report
+            
+       ]);
+
+       return redirect(route('profile'))->with('message', 'Report Send Successfully');
     }
 
     /**
@@ -48,21 +83,6 @@ class UserActivityReportController extends Controller
      */
     public function show(Request $request)
     {
-        $dateFrom = $request->input('date_from');
-        $dateTo = $request->input('date_to');
-
-        if (isset($dateFrom) && isset($dateTo)) {
-            
-            $userActivity = auth()->user()->userActivities
-            ->sortBy('activity_start_date')
-            ->where('activity_start_date', '>=', $dateFrom)
-            ->where('activity_end_date', '<=', $dateTo);
-
-            return view('profile.reports.show', compact('userActivity'));
-
-        }else {
-            
-            return redirect()->back()->with('error', 'Date Not Selected');
-        } 
+        
     }
 }

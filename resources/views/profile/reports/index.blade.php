@@ -10,7 +10,7 @@
                     <h2 class="text-warning mb-0">{{ __('Find Report') }}</h2>
                 </div>
                 <div class="card-body"> 
-                    <form action="{{ route('show') }}" method="post"> 
+                    <form action="{{ route('reportCreate') }}" method="get"> 
                         @csrf                
                         <div class="row">
                             <div class="col-sm-6 mb-3">
@@ -35,7 +35,37 @@
                 </div>
                 <div class="col-md-4">
                     <x-alert />
-                </div>                
+                </div> 
+                <div class="card-body"> 
+                    <div class="table-responsive-md">
+                        <table class="table table-striped shadow">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Activity Name</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>                               
+                                    
+                                @foreach( $userActivity as $item)
+                           
+                                    <tr>
+                                        <td name="activity_name_report" id="activity_name_report">{{ $item->activity_name }}</td>
+                                        <td name="activity_start_date_report" id="activity_start_date_report">{{ $item->activity_start_date }}</td>
+                                        <td name="activity_end_date_report" id="activity_end_date_report">{{ $item->activity_end_date }}</td>
+                                        <td name="activity_duration_report" id="activity_duration_report">{{ $item->activity_duration }}</td>
+                                        <td name="activity_description_report" id="activity_description_report" class="table-data">{{ $item->activity_description }}</td>
+                                    </tr>
+                
+                                @endforeach              
+                                       
+                            </tbody>
+                        </table>
+                    </div>
+                </div>               
             </div>            
         </div>
     </div>

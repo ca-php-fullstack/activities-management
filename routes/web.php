@@ -29,6 +29,6 @@ Route::put('/update/{userActivity}', 'UserActivityController@update')->name('upd
 Route::delete('/destroy/{userActivity}', 'UserActivityController@destroy')->name('destroy');
 
 Route::get('/report', 'UserActivityReportController@index')->name('report');
-Route::post('/report', 'UserActivityReportController@show')->name('show');
+Route::get('/reportCreate', 'UserActivityReportController@reportCreate')->name('reportCreate');
 Route::post('/reportStore', 'UserActivityReportController@store')->name('reportStore');
 Route::get('/reportShow', 'UserActivityReportController@reportShow')->name('reportShow');
