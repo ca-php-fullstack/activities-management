@@ -14,11 +14,9 @@ class UserActivityReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserActivity $userActivity)
+    public function index()
     {
-        $userActivity = auth()->user()->userActivities->sortBy('activity_start_date');
-
-        return view('profile.reports.index', compact('userActivity'));
+        return view('profile.reports.index');
     }
 
     /**
@@ -60,7 +58,7 @@ class UserActivityReportController extends Controller
             ->where('activity_start_date', '>=', $dateFrom)
             ->where('activity_end_date', '<=', $dateTo);
 
-            return view('profile.reports.index', compact('userActivity'));
+            return view('profile.reports.show', compact('userActivity'));
 
         }else {
             

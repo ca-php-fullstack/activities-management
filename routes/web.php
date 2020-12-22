@@ -30,5 +30,5 @@ Route::delete('/destroy/{userActivity}', 'UserActivityController@destroy')->name
 
 Route::get('/report', 'UserActivityReportController@index')->name('report');
 Route::post('/report', 'UserActivityReportController@show')->name('show');
-Route::post('/storeReport', 'UserActivityReportController@store')->name('reportStore');
+Route::post('/reportStore', 'UserActivityReportController@store')->name('reportStore');
 Route::get('/reportShow', 'UserActivityReportController@reportShow')->name('reportShow');
