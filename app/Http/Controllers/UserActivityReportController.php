@@ -16,7 +16,11 @@ class UserActivityReportController extends Controller
      */
     public function index(UserActivity $userActivity)
     {
-        $userActivity = auth()->user()->userActivities->sortBy('activity_start_date');
+        //$userActivity = auth()->user()->userActivities->sortBy('activity_start_date');
+        
+        $userId = Auth::id(); 
+        // is this single Activity or Many Activities? it should be $userActivities
+        $userActivity = UserActivity::where('user_id', $userId)->sortBy('activity_start_date')->get();
 
         return view('profile.reports.index', compact('userActivity'));
     }
@@ -26,17 +30,23 @@ class UserActivityReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    // THIS FUNCTION DOES NOT CREATE ANYTHING WHy YOU CALLED IT reportCreate ????
     public function reportCreate(Request $request)
     {
-        $dateFrom = $request->input('date_from');
-        $dateTo = $request->input('date_to');        
-            
-        if (isset($dateFrom) && isset($dateTo)) {
+        $dateFrom =  request('date_from');
+        $dateTo = request('date_to');        
+        $userId = Auth::id(); 
+//         if (isset($dateFrom) && isset($dateTo)) { <---- we dont need isset here, request() will return null if parameter not set and $dateFrom will be null,
+        // but will be set anyway
+        if ( $dateFrom && $dateTo ) {
 
-            $userActivity = auth()->user()->userActivities
-            ->sortBy('activity_start_date')
-            ->where('activity_start_date', '>=', $dateFrom)
-            ->where('activity_end_date', '<=', $dateTo);
+            // Pagination? 
+            $userActivity = UserActivity::where('user_id', $userId)
+            ->whereDate('activity_start_date', '>=', $dateFrom) // date should be format  2020-01-31
+            ->whereDate('activity_end_date', '<=', $dateTo)
+            ->sortBy('activity_start_date') // we put sorting and grouping at the end of query usually
+            ->get();
 
             return view('profile.reports.create', compact('userActivity'));
 
@@ -54,16 +64,19 @@ class UserActivityReportController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'activity_name_report',
-            'activity_start_date_report',
-            'activity_end_date_report',
-            'activity_duration_report', 
-            'activity_description_report'
+        // ADD correct validation
+//         $request->validate([
+//             'activity_name_report',
+//             'activity_start_date_report',
+//             'activity_end_date_report',
+//             'activity_duration_report', 
+//             'activity_description_report'
                        
-        ]);
+//         ]);
 
-        auth()->user()->userActivitiesReports()->create([
+        
+        // why you need this long Database fields?
+        UserActivity::create([
             'activity_name_report' => $request->activity_name_report,
             'activity_start_date_report' => $request->activity_start_date_report,
             'activity_end_date_report' => $request->activity_end_date_report,
@@ -72,6 +85,7 @@ class UserActivityReportController extends Controller
             
        ]);
 
+        // consider just redirect redirect()->back()->with('message', 'Report Send Successfully');
        return redirect(route('profile'))->with('message', 'Report Send Successfully');
     }
 
